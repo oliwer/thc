@@ -5,7 +5,7 @@ THC - Timed HTTP Client for Go
 [![Build Status](https://travis-ci.org/oliwer/thc.png)](https://travis-ci.org/oliwer/thc)
 [![Go Report Card](https://goreportcard.com/badge/oliwer/thc)](https://goreportcard.com/report/oliwer/thc)
 
-THC is a thin wrapper around Go's `http.Client` package witch provides these extra features.
+THC is a thin wrapper around Go's `http.Client` package which provides the following extra features.
 
 ## Metrics
 

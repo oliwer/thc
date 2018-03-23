@@ -1,5 +1,5 @@
 /*
-Package thc is a thin wrapper around Go's http.Client package witch provides:
+Package thc is a thin wrapper around Go's http.Client package which provides:
 
  Metrics
 
