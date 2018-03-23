@@ -8,3 +8,7 @@ go:
 script:
   - go test -v ./...
   - go test -v -race ./...
+
+notifications:
+  email:
+    on_success: never
