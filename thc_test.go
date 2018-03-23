@@ -51,7 +51,7 @@ func TestMetrics(t *testing.T) {
 		k := elem.Key
 		v, _ := strconv.ParseFloat(elem.Value.String(), 64)
 
-		switch elem.Key {
+		switch k {
 		case "thc-dns-lookup":
 			assert(k, v, v == 0) // We connect to an IP address.
 		case "thc-tcp-connection":
