@@ -41,29 +41,29 @@ func withTracing(ctx context.Context, m *Metrics) context.Context {
 
 		DNSStart: func(_ httptrace.DNSStartInfo) { dnsStart = time.Now() },
 		DNSDone: func(_ httptrace.DNSDoneInfo) {
-			m.DNSLookup.Incr(time.Now().Sub(dnsStart).Nanoseconds())
+			m.DNSLookup.Incr(time.Since(dnsStart).Nanoseconds())
 		},
 
 		ConnectStart: func(_, _ string) { tcpStart = time.Now() },
 		ConnectDone: func(_, _ string, _ error) {
-			m.TCPConnection.Incr(time.Now().Sub(tcpStart).Nanoseconds())
+			m.TCPConnection.Incr(time.Since(tcpStart).Nanoseconds())
 		},
 
 		TLSHandshakeStart: func() { tlsStart = time.Now() },
 		TLSHandshakeDone: func(_ tls.ConnectionState, _ error) {
-			m.TLSHandshake.Incr(time.Now().Sub(tlsStart).Nanoseconds())
+			m.TLSHandshake.Incr(time.Since(tlsStart).Nanoseconds())
 		},
 
 		GotConn: func(_ httptrace.GotConnInfo) {
-			m.GetConnection.Incr(time.Now().Sub(t0).Nanoseconds())
+			m.GetConnection.Incr(time.Since(t0).Nanoseconds())
 		},
 
 		WroteRequest: func(info httptrace.WroteRequestInfo) {
-			m.WriteRequest.Incr(time.Now().Sub(t0).Nanoseconds())
+			m.WriteRequest.Incr(time.Since(t0).Nanoseconds())
 		},
 
 		GotFirstResponseByte: func() {
-			m.GetResponse.Incr(time.Now().Sub(t0).Nanoseconds())
+			m.GetResponse.Incr(time.Since(t0).Nanoseconds())
 		},
 	})
 }
