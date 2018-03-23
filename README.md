@@ -22,42 +22,44 @@ predefined amount of time, the service will be restores and THC will resume to w
 
 # Example
 
-    package main
+```go
+package main
 
-    import (
-        "net/http"
-        "time"
+import (
+    "net/http"
+    "time"
 
-        "github.com/oliwer/thc"
-    )
+    "github.com/oliwer/thc"
+)
 
-    var client = &thc.THC{
-        Client:      &http.Client{Timeout: 100 * time.Millisecond},
-        Name:        "example",
-        MaxErrors:   10,
-        HealingTime: 20 * time.Second,
-    }
+var client = &thc.THC{
+    Client:      &http.Client{Timeout: 100 * time.Millisecond},
+    Name:        "example",
+    MaxErrors:   10,
+    HealingTime: 20 * time.Second,
+}
 
-    func init() {
-        client.PublishExpvar()
-    }
+func init() {
+    client.PublishExpvar()
+}
 
-    func main() {
-        for {
-            resp, err := client.Get("https://example.com/thing.json")
+func main() {
+    for {
+        resp, err := client.Get("https://example.com/thing.json")
 
-            if err == thc.ErrOutOfService {
-                // The service is down for 20s. (HealingTime)
-            }
-
-            if err != nil {
-                // There was an error but we are still OK because
-                // still under MaxErrors consecutive errors.
-            }
-
-            // Process resp normally...
+        if err == thc.ErrOutOfService {
+            // The service is down for 20s. (HealingTime)
         }
+
+        if err != nil {
+            // There was an error but we are still OK because
+            // still under MaxErrors consecutive errors.
+        }
+
+        // Process resp normally...
     }
+}
+```
 
 # Notes
 
