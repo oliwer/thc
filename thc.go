@@ -11,7 +11,7 @@ TLS handshakes, TCP sessions and more.
 After a defined number of consecutive failures, THC will switch to an *out of service* state.
 In this state, the client will stop sending HTTP requests and instead will return the error
 ErrOutOfService. It is up to the application to decide what to do in that case. After a
-predefined amount of time, the service will be restores and THC will resume to work normally.
+predefined amount of time, the service will be restored and THC will resume to work normally.
 */
 package thc
 

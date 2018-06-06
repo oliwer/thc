@@ -4,7 +4,6 @@ import (
 	"expvar"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"strconv"
 	"testing"
 	"time"
@@ -21,22 +20,19 @@ func TestMetrics(t *testing.T) {
 	client := THC{}
 	client.PublishExpvar()
 
-	// Helpers
-	r := func(resp *http.Response, err error) error {
-		resp.Body.Close()
-		return err
-	}
-	c := func(t *testing.T, err error) {
+	ok := func(resp *http.Response, err error) {
 		if err != nil {
 			t.Error(err)
+		} else {
+			resp.Body.Close()
 		}
 	}
 
 	// Do a few requests.
-	c(t, r(client.Get(server.URL)))
-	c(t, r(client.Head(server.URL)))
-	c(t, r(client.Post(server.URL, "text/plain", nil)))
-	c(t, r(client.PostForm(server.URL, url.Values{})))
+	ok(client.Get(server.URL))
+	ok(client.Head(server.URL))
+	ok(client.Post(server.URL, "text/plain", nil))
+	ok(client.PostForm(server.URL, nil))
 
 	assert := func(key string, val float64, cond bool) {
 		if !cond {
